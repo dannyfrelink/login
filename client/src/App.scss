@@ -11,16 +11,9 @@
 		flex-direction: column;
 		justify-content: center;
 		background-color: #5eb6e4;
-		height: 50vh;
+		height: 55vh;
 		width: 85vw;
 		border-radius: 1rem;
-
-		h1 {
-			margin: 0 0 1.5rem;
-			font-size: 1.5rem;
-			text-align: center;
-			color: #003145;
-		}
 
 		> div,
 		button {
@@ -28,7 +21,39 @@
 			width: 80%;
 		}
 
-		> div {
+		> div:first-of-type {
+			margin-bottom: 1.5rem;
+			color: #003145;
+
+			h1 {
+				margin: 0;
+				font-size: 1.5rem;
+				text-align: center;
+			}
+
+			div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 0.65rem;
+				margin-top: 0.5rem;
+
+				p {
+					margin: 0;
+				}
+
+				button {
+					width: fit-content;
+					font-size: 0.65rem;
+					padding: 0;
+					margin-left: 0.5rem;
+					margin-right: 0;
+					color: #003145;
+				}
+			}
+		}
+
+		> div:not(:first-of-type) {
 			margin-bottom: 2rem;
 
 			p {

@@ -4,8 +4,14 @@ import { useAppContext } from "../config/AppContext";
 
 const Login = () => {
 	const [error, setError] = useState<string>("");
-	const { username, setUsername, password, setPassword, setLogin } =
-		useAppContext();
+	const {
+		username,
+		setUsername,
+		password,
+		setPassword,
+		setLogin,
+		setRegister,
+	} = useAppContext();
 
 	const handleChange = (e: any) => {
 		const target = e.target;
@@ -40,8 +46,20 @@ const Login = () => {
 
 	return (
 		<div id="login">
-			<form method="POST">
-				<h1>Login</h1>
+			<form>
+				<div>
+					<h1>Login</h1>
+					<div>
+						<p>No account?</p>
+						<Button
+							onClick={() => setRegister(true)}
+							size="small"
+							variant="outlined"
+						>
+							Register
+						</Button>
+					</div>
+				</div>
 
 				<TextField
 					onChange={handleChange}
