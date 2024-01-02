@@ -1,8 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 interface AppContextProps {
 	// Define your context state and any functions you need
-	userName: string;
+	username: string;
+	setUsername: React.Dispatch<React.SetStateAction<string>>;
+	setPassword: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -12,10 +14,13 @@ interface AppProps {
 }
 
 export const AppProvider: React.FC<AppProps> = ({ children }) => {
-	const userName = "test";
+	const [username, setUsername] = useState<string>("");
+	const [, setPassword] = useState<string>("");
 
 	const contextValue: AppContextProps = {
-		userName,
+		username,
+		setUsername,
+		setPassword,
 	};
 
 	return (
