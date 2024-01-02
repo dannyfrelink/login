@@ -13,7 +13,32 @@ function isStrongPassword(password) {
   return passwordRegex.test(password);
 }
 
-app.post("/checkLogin", (req, res) => {
+app.get("/checkLogin", (req, res) => {
+  try {
+    const { username, password } = req.query;
+    const findUser = users.find((user) => user.username === username);
+    let error;
+
+    if (findUser) {
+      if (findUser.password === password) {
+        res.status(200).json({ success: "Successful login" });
+      } else {
+        error = "password";
+      }
+    } else {
+      error = "username";
+    }
+
+    if (error) {
+      res.status(400).json({ error });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
+  }
+});
+
+app.post("/checkRegister", (req, res) => {
   try {
     const { username, password } = req.body;
     const findUser = users.find((user) => user.username === username);
@@ -35,7 +60,7 @@ app.post("/checkLogin", (req, res) => {
         password,
       });
 
-      res.status(200).json({ success: "Successful login" });
+      res.status(200).json({ success: "Successful register" });
     }
 
     if (errors.length > 0) {

@@ -2,8 +2,8 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { useAppContext } from "../config/AppContext";
 
-const Login = () => {
-	const [error, setError] = useState<string>("");
+const Register = () => {
+	const [error, setError] = useState<string[]>([]);
 	const { username, setUsername, password, setPassword, setLogin } =
 		useAppContext();
 
@@ -20,8 +20,12 @@ const Login = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 
-		await fetch(`/checkLogin?username=${username}&password=${password}`, {
-			method: "GET",
+		await fetch("/checkRegister", {
+			method: "POST",
+			body: JSON.stringify({
+				username,
+				password,
+			}),
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -33,7 +37,7 @@ const Login = () => {
 					setPassword("");
 					setLogin(true);
 				} else {
-					setError(log.error);
+					setError(log.errors);
 				}
 			});
 	};
@@ -41,7 +45,7 @@ const Login = () => {
 	return (
 		<div id="login">
 			<form method="POST">
-				<h1>Login</h1>
+				<h1>Register</h1>
 
 				<TextField
 					onChange={handleChange}
@@ -49,8 +53,10 @@ const Login = () => {
 					label="Username"
 					name="username"
 					required
-					error={error === "username" && true}
-					helperText={error === "username" && "Cannot find username."}
+					error={error.includes("username") && true}
+					helperText={
+						error.includes("username") && "Username already in use."
+					}
 				/>
 				<TextField
 					onChange={handleChange}
@@ -58,8 +64,11 @@ const Login = () => {
 					label="Password"
 					name="password"
 					required
-					error={error === "password" && true}
-					helperText={error === "password" && "Incorrect password."}
+					error={error.includes("password") && true}
+					helperText={
+						error.includes("password") &&
+						"Use capital, number and special character."
+					}
 				/>
 
 				<Button
@@ -67,11 +76,11 @@ const Login = () => {
 					variant="contained"
 					disabled={username && password ? false : true}
 				>
-					Login
+					Register
 				</Button>
 			</form>
 		</div>
 	);
 };
 
-export default Login;
+export default Register;
