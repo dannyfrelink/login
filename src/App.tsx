@@ -1,5 +1,5 @@
 import "./App.scss";
-import { AppProvider, useAppContext } from "./config/AppContext";
+import { AppProvider } from "./config/AppContext";
 import AppRouter from "./config/AppRouter";
 
 function App() {
