@@ -18,7 +18,7 @@
 		box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 
 		> div,
-		button {
+		> button {
 			margin: 0 auto;
 			width: 80%;
 		}
@@ -37,7 +37,7 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: clamp(0.65rem, 1.6vw, 0.97rem);
+				font-size: clamp(0.65rem, 1.6vw, 0.8rem);
 				margin-top: clamp(0.5rem, 1.23vw, 0.75rem);
 
 				p {
@@ -45,10 +45,9 @@
 				}
 
 				button {
-					width: fit-content;
-					font-size: clamp(0.65rem, 1.6vw, 0.97rem);
+					font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+					padding: 2px 6px;
 					margin-left: clamp(0.5rem, 1.23vw, 0.75rem);
-					margin-right: 0;
 					color: #003145;
 				}
 			}
@@ -62,6 +61,13 @@
 				bottom: clamp(-1.4rem, -3.45vw, -2.1rem);
 				margin: 0;
 			}
+		}
+
+		> button {
+			width: 60%;
+			max-width: 22.5rem;
+			padding-top: clamp(9px, 1.38vw, 13.5px);
+			padding-bottom: clamp(9px, 1.38vw, 13.5px);
 		}
 	}
 }
