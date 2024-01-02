@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useAppContext } from "../config/AppContext";
 
 const Login = () => {
-	const [error, setError] = useState<boolean>(false);
-	const { username, setUsername, password, setPassword } = useAppContext();
+	const [error, setError] = useState<string[]>([]);
+	const { username, setUsername, password, setPassword, setLogin } =
+		useAppContext();
 
 	const handleChange = (e: any) => {
 		const target = e.target;
@@ -16,10 +17,10 @@ const Login = () => {
 		}
 	};
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 
-		fetch("/checkLogin", {
+		const login = await fetch("/checkLogin", {
 			method: "POST",
 			body: JSON.stringify({
 				username,
@@ -28,7 +29,25 @@ const Login = () => {
 			headers: {
 				"Content-Type": "application/json",
 			},
-		});
+		})
+			.then((res) => res.json())
+			.then((log) => {
+				if (log.success) {
+					setUsername("");
+					setPassword("");
+					setLogin(true);
+				} else {
+					setError(log.errors);
+				}
+			});
+
+		// if (login.status === 200) {
+		// 	setUsername("");
+		// 	setPassword("");
+		// 	setLogin(true);
+		// } else {
+		// 	login
+		// }
 	};
 
 	return (
@@ -42,8 +61,10 @@ const Login = () => {
 					label="Username"
 					name="username"
 					required
-					error={error}
-					helperText={error && "Username already in use."}
+					error={error.includes("username") && true}
+					helperText={
+						error.includes("username") && "Username already in use."
+					}
 				/>
 				<TextField
 					onChange={handleChange}
@@ -51,10 +72,10 @@ const Login = () => {
 					label="Password"
 					name="password"
 					required
-					error={error}
+					error={error.includes("password") && true}
 					helperText={
-						error &&
-						"Use minimal one capital, one number, one special character."
+						error.includes("password") &&
+						"Use capital, number and special character."
 					}
 				/>
 

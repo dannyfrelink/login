@@ -5,17 +5,45 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const { users } = require("./mongoDB.json");
 
-app.post("/checkLogin", async (req, res) => {
+function isStrongPassword(password) {
+  // Check for at least one number, one special character, one lowercase letter, one uppercase letter, and no spaces
+  const passwordRegex =
+    /^(?=.*\d)(?=.*[!@#$%^&*()-_=+{};:'",.<>?/\\])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{6,}$/;
+
+  return passwordRegex.test(password);
+}
+
+app.post("/checkLogin", (req, res) => {
   try {
-    const { username, password } = await req.body;
+    const { username, password } = req.body;
+    const findUser = users.find((user) => user.username === username);
+    const checkPassword = isStrongPassword(password);
+    let errors = [];
 
-    console.log(users);
+    if (findUser) {
+      errors.push("username");
+    }
+    if (!checkPassword) {
+      errors.push("password");
+    }
 
-    console.log(username, password);
+    if (!findUser && checkPassword) {
+      errors = [];
 
-    res.send("Hello world");
+      users.push({
+        username,
+        password,
+      });
+
+      res.status(200).json({ success: "Successful login" });
+    }
+
+    if (errors.length > 0) {
+      res.status(500).json({ errors });
+    }
   } catch (error) {
-    res.send(error);
+    console.log(error);
+    res.status(400).json({ error });
   }
 });
 
