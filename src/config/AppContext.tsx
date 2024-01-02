@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from "react";
 interface AppContextProps {
 	// Define your context state and any functions you need
 	username: string;
+	password: string;
 	setUsername: React.Dispatch<React.SetStateAction<string>>;
 	setPassword: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -15,10 +16,11 @@ interface AppProps {
 
 export const AppProvider: React.FC<AppProps> = ({ children }) => {
 	const [username, setUsername] = useState<string>("");
-	const [, setPassword] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
 
 	const contextValue: AppContextProps = {
 		username,
+		password,
 		setUsername,
 		setPassword,
 	};
