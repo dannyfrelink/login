@@ -56,6 +56,11 @@
 		> div:not(:first-of-type) {
 			margin-bottom: clamp(2rem, 4.92vw, 3rem);
 
+			label,
+			input {
+				color: #003145;
+			}
+
 			p {
 				position: absolute;
 				bottom: clamp(-1.4rem, -3.45vw, -2.1rem);
@@ -64,6 +69,8 @@
 		}
 
 		> button {
+			color: #c2deea;
+			border-color: #003145;
 			width: 60%;
 			max-width: 22.5rem;
 			padding-top: clamp(9px, 1.38vw, 13.5px);
@@ -72,5 +79,25 @@
 	}
 }
 
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-color-scheme: dark) {
+	#login {
+		background-color: #003145;
+
+		form {
+			background-color: #005b82;
+
+			> div:first-of-type {
+				color: #c2deea;
+
+				div button {
+					color: #c2deea;
+					border-color: #c2deea;
+				}
+			}
+
+			> div:not(:first-of-type) div {
+				background-color: #c2deea;
+			}
+		}
+	}
 }
