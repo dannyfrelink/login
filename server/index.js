@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 3001;
-const fetch = require("node-fetch");
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
+const { users } = require("./mongoDB.json");
 
 app.post("/checkLogin", async (req, res) => {
   try {
     const { username, password } = await req.body;
+
+    console.log(users);
 
     console.log(username, password);
 
