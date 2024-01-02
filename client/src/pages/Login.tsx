@@ -4,27 +4,36 @@ import { useAppContext } from "../config/AppContext";
 
 const Login = () => {
 	const [error, setError] = useState<boolean>(false);
-	const [user, setUser] = useState<string>("");
-	const [pass, setPass] = useState<string>("");
-	const { setUsername, setPassword } = useAppContext();
+	const { username, setUsername, password, setPassword } = useAppContext();
 
 	const handleChange = (e: any) => {
 		const target = e.target;
 
 		if (target.name === "username") {
-			setUser(target.value);
+			setUsername(target.value);
 		} else {
-			setPass(target.value);
+			setPassword(target.value);
 		}
 	};
 
 	const handleSubmit = (e: any) => {
 		e.preventDefault();
+
+		fetch("/checkLogin", {
+			method: "POST",
+			body: JSON.stringify({
+				username,
+				password,
+			}),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
 	};
 
 	return (
 		<div id="login">
-			<form method="POST" onSubmit={handleSubmit}>
+			<form method="POST">
 				<h1>Login</h1>
 
 				<TextField
@@ -50,8 +59,9 @@ const Login = () => {
 				/>
 
 				<Button
+					onClick={handleSubmit}
 					variant="contained"
-					disabled={user && pass ? false : true}
+					disabled={username && password ? false : true}
 				>
 					Login
 				</Button>

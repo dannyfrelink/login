@@ -5,11 +5,11 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 
 const AppRouter: React.FC = () => {
-	const { username } = useAppContext();
+	const { login } = useAppContext();
 	return (
 		<Router>
 			<Routes>
-				<Route path="/" element={username ? <Home /> : <Login />} />
+				<Route path="/" element={login ? <Home /> : <Login />} />
 			</Routes>
 		</Router>
 	);
