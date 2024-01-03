@@ -34,7 +34,12 @@ const Login = () => {
 		})
 			.then((res) => res.json())
 			.then((log) => {
+				console.log(log.authToken);
 				if (log.success) {
+					const authToken = log.authToken;
+					localStorage.setItem("authToken", authToken);
+					localStorage.setItem("user", username);
+
 					setUsername("");
 					setPassword("");
 					setLogin(true);

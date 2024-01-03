@@ -7,13 +7,21 @@ import Register from "../pages/Register";
 
 const AppRouter: React.FC = () => {
 	const { login, register } = useAppContext();
+	const authToken = localStorage.getItem("authToken");
+
 	return (
 		<Router>
 			<Routes>
 				<Route
 					path="/"
 					element={
-						login ? <Home /> : register ? <Register /> : <Login />
+						login || authToken ? (
+							<Home />
+						) : register ? (
+							<Register />
+						) : (
+							<Login />
+						)
 					}
 				/>
 			</Routes>

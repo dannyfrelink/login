@@ -4,6 +4,12 @@ const port = 3001;
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const { users } = require("./mongoDB.json");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+
+const generateRandomString = (length) => {
+  return crypto.randomBytes(length).toString("hex");
+};
 
 function isStrongPassword(password) {
   // Check for at least one number, one special character, one lowercase letter, one uppercase letter, and no spaces
@@ -18,10 +24,14 @@ app.get("/checkLogin", (req, res) => {
     const { username, password } = req.query;
     const findUser = users.find((user) => user.username === username);
     let error;
+    const secretKey = generateRandomString(32);
 
     if (findUser) {
       if (findUser.password === password) {
-        res.status(200).json({ success: "Successful login" });
+        const authToken = jwt.sign({ username }, secretKey, {
+          expiresIn: "1h",
+        });
+        res.status(200).json({ success: "Successful login", authToken });
       } else {
         error = "password";
       }

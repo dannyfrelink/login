@@ -1,9 +1,10 @@
 const Home = () => {
+	const user = localStorage.getItem("user");
 	return (
 		<div className="container">
 			<main>
 				<div>
-					<h1>Welcome ...</h1>
+					<h1>Welcome {user}</h1>
 				</div>
 			</main>
 		</div>
