@@ -49,7 +49,7 @@ const Register = () => {
 	};
 
 	return (
-		<div id="login">
+		<div className="login">
 			<form>
 				<div>
 					<h1>Register</h1>

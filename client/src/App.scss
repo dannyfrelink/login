@@ -1,4 +1,4 @@
-#login {
+.login {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -80,7 +80,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	#login {
+	.login {
 		background-color: #003145;
 
 		form {

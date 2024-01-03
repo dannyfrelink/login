@@ -45,7 +45,7 @@ const Login = () => {
 	};
 
 	return (
-		<div id="login">
+		<div className="login">
 			<form>
 				<div>
 					<h1>Login</h1>
