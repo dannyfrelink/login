@@ -21,7 +21,7 @@ interface AppProps {
 export const AppProvider: React.FC<AppProps> = ({ children }) => {
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [login, setLogin] = useState<boolean>(false);
+	const [login, setLogin] = useState<boolean>(true);
 	const [register, setRegister] = useState<boolean>(false);
 
 	const contextValue: AppContextProps = {

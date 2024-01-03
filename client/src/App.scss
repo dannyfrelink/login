@@ -1,4 +1,4 @@
-.login {
+.container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -6,7 +6,8 @@
 	width: 100vw;
 	background-color: #c2deea;
 
-	form {
+	form,
+	main {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -80,7 +81,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-	.login {
+	.container {
 		background-color: #003145;
 
 		form {
