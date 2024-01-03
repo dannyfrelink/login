@@ -1,19 +1,38 @@
-.container {
+:root {
+	--color-light: #c2deea;
+	--color-medium: #005b82;
+	--color-dark: #003145;
+}
+
+@mixin center-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
-	width: 100vw;
-	background-color: #c2deea;
+}
+
+@mixin paddingY($top, $bottom) {
+	padding-top: $top;
+	padding-bottom: $bottom;
+}
+
+@mixin widthHeight($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+.container {
+	@include center-content;
+	@include widthHeight(100vw, 100vh);
+
+	background-color: var(--color-light);
 
 	form,
 	main {
-		display: flex;
+		@include center-content;
+		@include widthHeight(85vw, clamp(55vh, 64.62vw, 65vh));
+
 		flex-direction: column;
-		justify-content: center;
 		background-color: white;
-		height: clamp(55vh, 64.62vw, 65vh);
-		width: 85vw;
 		max-width: 56rem;
 		border-radius: clamp(1rem, 2.46vw, 1.5rem);
 		box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
@@ -26,7 +45,7 @@
 
 		> div:first-of-type {
 			margin-bottom: clamp(1.5rem, 3.69vw, 2.25rem);
-			color: #003145;
+			color: var(--color-dark);
 
 			h1 {
 				margin: 0;
@@ -35,9 +54,8 @@
 			}
 
 			div {
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				@include center-content;
+
 				font-size: clamp(0.65rem, 1.6vw, 0.8rem);
 				margin-top: clamp(0.5rem, 1.23vw, 0.75rem);
 
@@ -49,7 +67,7 @@
 					font-size: clamp(0.65rem, 1.6vw, 0.8rem);
 					padding: 2px 6px;
 					margin-left: clamp(0.5rem, 1.23vw, 0.75rem);
-					color: #003145;
+					color: var(--color-dark);
 				}
 			}
 		}
@@ -59,7 +77,7 @@
 
 			label,
 			input {
-				color: #003145;
+				color: var(--color-dark);
 			}
 
 			p {
@@ -70,34 +88,37 @@
 		}
 
 		> button {
-			color: #c2deea;
-			border-color: #003145;
+			@include paddingY(
+				clamp(9px, 1.38vw, 13.5px),
+				clamp(9px, 1.38vw, 13.5px)
+			);
+
+			color: var(--color-light);
+			border-color: var(--color-dark);
 			width: 60%;
 			max-width: 22.5rem;
-			padding-top: clamp(9px, 1.38vw, 13.5px);
-			padding-bottom: clamp(9px, 1.38vw, 13.5px);
 		}
 	}
 }
 
 @media (prefers-color-scheme: dark) {
 	.container {
-		background-color: #003145;
+		background-color: var(--color-dark);
 
 		form {
-			background-color: #005b82;
+			background-color: var(--color-medium);
 
 			> div:first-of-type {
-				color: #c2deea;
+				color: var(--color-light);
 
 				div button {
-					color: #c2deea;
-					border-color: #c2deea;
+					color: var(--color-light);
+					border-color: var(--color-light);
 				}
 			}
 
 			> div:not(:first-of-type) div {
-				background-color: #c2deea;
+				background-color: var(--color-light);
 			}
 		}
 	}
