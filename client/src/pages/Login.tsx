@@ -4,14 +4,8 @@ import { useAppContext } from "../config/AppContext";
 
 const Login = () => {
 	const [error, setError] = useState<string>("");
-	const {
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setLogin,
-		setRegister,
-	} = useAppContext();
+	const { username, setUsername, password, setPassword, setRegister } =
+		useAppContext();
 
 	const handleChange = (e: any) => {
 		const target = e.target;
@@ -34,7 +28,6 @@ const Login = () => {
 		})
 			.then((res) => res.json())
 			.then((log) => {
-				console.log(log.authToken);
 				if (log.success) {
 					const authToken = log.authToken;
 					localStorage.setItem("authToken", authToken);
@@ -42,7 +35,6 @@ const Login = () => {
 
 					setUsername("");
 					setPassword("");
-					setLogin(true);
 				} else {
 					setError(log.error);
 				}
@@ -80,6 +72,7 @@ const Login = () => {
 					variant="filled"
 					label="Password"
 					name="password"
+					type="password"
 					required
 					error={error === "password" && true}
 					helperText={error === "password" && "Incorrect password."}

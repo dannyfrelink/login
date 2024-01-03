@@ -54,6 +54,7 @@ app.post("/checkRegister", (req, res) => {
     const findUser = users.find((user) => user.username === username);
     const checkPassword = isStrongPassword(password);
     let errors = [];
+    const secretKey = generateRandomString(32);
 
     if (findUser) {
       errors.push("username");
@@ -70,7 +71,11 @@ app.post("/checkRegister", (req, res) => {
         password,
       });
 
-      res.status(200).json({ success: "Successful register" });
+      const authToken = jwt.sign({ username }, secretKey, {
+        expiresIn: "1h",
+      });
+
+      res.status(200).json({ success: "Successful register", authToken });
     }
 
     if (errors.length > 0) {

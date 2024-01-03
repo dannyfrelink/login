@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 
 const AppRouter: React.FC = () => {
-	const { login, register } = useAppContext();
+	const { register } = useAppContext();
 	const authToken = localStorage.getItem("authToken");
 
 	return (
@@ -15,7 +15,7 @@ const AppRouter: React.FC = () => {
 				<Route
 					path="/"
 					element={
-						login || authToken ? (
+						authToken ? (
 							<Home />
 						) : register ? (
 							<Register />

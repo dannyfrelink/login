@@ -6,8 +6,6 @@ interface AppContextProps {
 	password: string;
 	setUsername: React.Dispatch<React.SetStateAction<string>>;
 	setPassword: React.Dispatch<React.SetStateAction<string>>;
-	login: boolean;
-	setLogin: React.Dispatch<React.SetStateAction<boolean>>;
 	register: boolean;
 	setRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -21,7 +19,6 @@ interface AppProps {
 export const AppProvider: React.FC<AppProps> = ({ children }) => {
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [login, setLogin] = useState<boolean>(false);
 	const [register, setRegister] = useState<boolean>(false);
 
 	const contextValue: AppContextProps = {
@@ -29,8 +26,6 @@ export const AppProvider: React.FC<AppProps> = ({ children }) => {
 		password,
 		setUsername,
 		setPassword,
-		login,
-		setLogin,
 		register,
 		setRegister,
 	};

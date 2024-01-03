@@ -4,14 +4,8 @@ import { useAppContext } from "../config/AppContext";
 
 const Register = () => {
 	const [error, setError] = useState<string[]>([]);
-	const {
-		username,
-		setUsername,
-		password,
-		setPassword,
-		setLogin,
-		setRegister,
-	} = useAppContext();
+	const { username, setUsername, password, setPassword, setRegister } =
+		useAppContext();
 
 	const handleChange = (e: any) => {
 		const target = e.target;
@@ -39,9 +33,12 @@ const Register = () => {
 			.then((res) => res.json())
 			.then((log) => {
 				if (log.success) {
+					const authToken = log.authToken;
+					localStorage.setItem("authToken", authToken);
+					localStorage.setItem("user", username);
+
 					setUsername("");
 					setPassword("");
-					setLogin(true);
 				} else {
 					setError(log.errors);
 				}
@@ -81,6 +78,7 @@ const Register = () => {
 					variant="filled"
 					label="Password"
 					name="password"
+					type="password"
 					required
 					error={error.includes("password") && true}
 					helperText={
