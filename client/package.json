@@ -26,6 +26,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build",
 		"eject": "react-scripts eject",
 		"test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(.*\\.(js|jsx|ts|tsx)$))\"",
 		"test:coverage": "react-scripts test --coverage",
@@ -55,5 +57,8 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"gh-pages": "^6.1.1"
 	}
 }
