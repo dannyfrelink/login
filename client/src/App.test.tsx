@@ -10,7 +10,7 @@ afterEach(() => {
 	localStorage.clear();
 });
 
-describe("Login", () => {
+describe("Login & Register", () => {
 	it("should render Login page and perform login", async () => {
 		render(<App />);
 
@@ -47,9 +47,7 @@ describe("Login", () => {
 		expect(localStorage.getItem("authToken")).toBe("fakeAuthToken");
 		expect(localStorage.getItem("user")).toBe("testUser");
 	});
-});
 
-describe("Register", () => {
 	it("should render Register page and perform register", async () => {
 		render(<App />);
 
