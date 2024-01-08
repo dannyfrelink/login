@@ -1,11 +1,43 @@
 const express = require("express");
 const app = express();
 const port = 3001;
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const dotenv = require("dotenv");
+dotenv.config();
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
-const { users } = require("./mongoDB.json");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+
+// MongoDB connection URI
+const mongoURL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URI}/?retryWrites=true&w=majority`;
+
+let usersDB;
+
+// Create a MongoDB client
+const client = new MongoClient(mongoURL, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+// Connect client and set databases
+const run = async () => {
+  try {
+    await client.connect();
+    const db = await client.db(process.env.DB_DATABASE);
+    usersDB = db.collection("users");
+
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+run();
 
 const generateRandomString = (length) => {
   return crypto.randomBytes(length).toString("hex");
@@ -19,10 +51,10 @@ function isStrongPassword(password) {
   return passwordRegex.test(password);
 }
 
-app.get("/checkLogin", (req, res) => {
+app.get("/checkLogin", async (req, res) => {
   try {
     const { username, password } = req.query;
-    const findUser = users.find((user) => user.username === username);
+    const findUser = await usersDB.findOne({ username });
     let error;
     const secretKey = generateRandomString(32);
 
@@ -48,10 +80,10 @@ app.get("/checkLogin", (req, res) => {
   }
 });
 
-app.post("/checkRegister", (req, res) => {
+app.post("/checkRegister", async (req, res) => {
   try {
     const { username, password } = req.body;
-    const findUser = users.find((user) => user.username === username);
+    const findUser = await usersDB.findOne({ username });
     const checkPassword = isStrongPassword(password);
     let errors = [];
     const secretKey = generateRandomString(32);
@@ -66,7 +98,7 @@ app.post("/checkRegister", (req, res) => {
     if (!findUser && checkPassword) {
       errors = [];
 
-      users.push({
+      await usersDB.insertOne({
         username,
         password,
       });
@@ -79,6 +111,7 @@ app.post("/checkRegister", (req, res) => {
     }
 
     if (errors.length > 0) {
+      console.log(errors);
       res.status(500).json({ errors });
     }
   } catch (error) {
